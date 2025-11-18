@@ -237,5 +237,54 @@ window.onresize = () => {
     <footer>
         <p>&copy; 2025 Yassine El Majouli. All rights reserved.</p>
     </footer>
+    	<script>
+		const canvas = document.getElementById('cyber-bg');
+		const ctx = canvas.getContext('2d');
+		
+		// Set canvas size
+		function resizeCanvas() {
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+		}
+		resizeCanvas();
+		window.addEventListener('resize', resizeCanvas);
+		
+		// Binary characters
+		const chars = '01';
+		const fontSize = 20;
+		const columns = Math.floor(canvas.width / fontSize);
+		const drops = Array(columns).fill(0);
+		
+		// Draw binary rain
+		function draw() {
+			// Semi-transparent black background
+			ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+			
+			// Green text
+			ctx.fillStyle = '#0f0';
+			ctx.font = 'bold ' + fontSize + 'px monospace';
+			ctx.shadowColor = '#0f0';
+			ctx.shadowBlur = 10;
+			
+			for (let i = 0; i < drops.length; i++) {
+				const char = chars.charAt(Math.floor(Math.random() * chars.length));
+				ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+				
+				// Random drop reset
+				if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+					drops[i] = 0;
+				}
+				drops[i]++;
+			}
+		}
+		
+		// Animation loop
+		function animate() {
+			draw();
+			requestAnimationFrame(animate);
+		}
+		animate();
+	</script>
 </body>
 </html>
