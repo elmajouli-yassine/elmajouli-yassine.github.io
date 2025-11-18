@@ -70,9 +70,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    float: left; /* Add this */
-    margin-right: 20px; /* Add some spacing */
-    margin-bottom: 10px; /* Optional: for text wrapping */
 }
 
 
