@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://elmajouli-yassine.github.io/sitemap.xml
