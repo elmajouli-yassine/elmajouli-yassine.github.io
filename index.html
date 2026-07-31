@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Yassine El Majouli | Cybersecurity &amp; Cloud Computing</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-main": "#0e1416",
+                    "on-background": "#dee3e6",
+                    "on-error": "#690005",
+                    "surface-container-highest": "#303638",
+                    "tertiary-container": "#ffb873",
+                    "surface-tint": "#4cd7f6",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-surface-variant": "#bcc9cd",
+                    "tertiary-fixed": "#ffdcbf",
+                    "background": "#0e1416",
+                    "surface-container": "#1b2122",
+                    "surface-bright": "#343a3c",
+                    "on-surface": "#dee3e6",
+                    "error-container": "#93000a",
+                    "primary": "#acedff",
+                    "inverse-surface": "#dee3e6",
+                    "primary-fixed-dim": "#4cd7f6",
+                    "surface-variant": "#303638",
+                    "on-secondary-container": "#003e28",
+                    "on-secondary": "#003824",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-error-container": "#ffdad6",
+                    "on-primary-container": "#005b6b",
+                    "on-primary": "#003640",
+                    "outline-variant": "#3d494c",
+                    "outline": "#869397",
+                    "on-primary-fixed-variant": "#004e5c",
+                    "surface-container-lowest": "#090f11",
+                    "surface-dim": "#0e1416",
+                    "on-tertiary-container": "#794709",
+                    "tertiary": "#ffdcbf",
+                    "secondary": "#4edea3",
+                    "on-tertiary-fixed-variant": "#6a3b00",
+                    "tertiary-fixed-dim": "#ffb873",
+                    "inverse-primary": "#00687a",
+                    "on-secondary-fixed": "#002114",
+                    "on-primary-fixed": "#001f26",
+                    "secondary-fixed-dim": "#4edea3",
+                    "surface-container-high": "#252b2d",
+                    "surface-container-low": "#171d1e",
+                    "inverse-on-surface": "#2b3133",
+                    "error": "#ffb4ab",
+                    "secondary-container": "#00b47d",
+                    "primary-fixed": "#acedff",
+                    "primary-container": "#4cd7f6",
+                    "on-tertiary-fixed": "#2d1600",
+                    "surface": "#0e1416",
+                    "on-tertiary": "#4a2800"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-desktop": "64px",
+                    "unit": "4px",
+                    "margin-mobile": "16px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-md": ["JetBrains Mono"],
+                    "body-lg": ["Inter"],
+                    "display-lg-mobile": ["JetBrains Mono"],
+                    "code-snippet": ["JetBrains Mono"],
+                    "display-lg": ["JetBrains Mono"],
+                    "label-sm": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "code-snippet": ["14px", {"lineHeight": "1.7", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #090f11;
+            color: #dee3e6;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 9999;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(172, 237, 255, 0.02) 50%, rgba(0, 0, 0, 0) 100%);
+            opacity: 0.1;
+            position: fixed;
+            bottom: 100%;
+            pointer-events: none;
+            animation: scanline 8s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { bottom: 100%; }
+            100% { bottom: -100px; }
+        }
+
+        .terminal-bracket::before { content: "[ "; color: #acedff; }
+        .terminal-bracket::after { content: " ]"; color: #acedff; }
+
+        .custom-glow:hover {
+            box-shadow: 0 0 20px rgba(76, 215, 246, 0.15);
+            border-color: rgba(172, 237, 255, 0.5);
+        }
+
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, #acedff 0%, #171d1e 100%);
+        }
+        
+        .radial-cursor-gradient {
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(76, 215, 246, 0.08) 0%, transparent 60%);
+        }
+
+        /* Scroll reveal system */
+        #scan-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            width: 0%;
+            background: linear-gradient(90deg, #4cd7f6, #4edea3);
+            z-index: 60;
+            box-shadow: 0 0 8px rgba(76, 215, 246, 0.6);
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .reveal,
+            .reveal-group > * {
+                opacity: 0;
+                transform: translateY(28px);
+                transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+                transition-delay: calc(var(--reveal-index, 0) * 90ms);
+            }
+            .reveal.reveal-left { transform: translateX(-36px); }
+            .reveal.reveal-right { transform: translateX(36px); }
+            .reveal.is-visible,
+            .reveal-group.is-visible > * {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+            .hero-in {
+                animation: hero-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+            }
+            .hero-in.hero-in-delay {
+                animation-delay: 0.15s;
+            }
+            @keyframes hero-in {
+                from { opacity: 0; transform: translateY(18px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        }
+    </style>
+</head>
+<body class="font-body-md selection:bg-primary selection:text-on-primary">
+<div class="scanline"></div>
+<div id="scan-progress"></div>
+<div class="fixed inset-0 pointer-events-none radial-cursor-gradient z-0" id="glow-canvas" style="--x: 88.59375%; --y: 33.66025892506865%;"></div>
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 bg-surface/90 dark:bg-surface/90 backdrop-blur-xl border-b border-outline-variant/30">
+<div class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="font-display-lg text-display-lg text-primary tracking-tighter" style="font-size: 24px;">YEM</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-primary border-b-2 border-primary pb-1 font-label-sm text-label-sm" href="#about">ABOUT</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors" href="#arsenal">ARSENAL</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors" href="#projects">PROJECTS</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors" href="#experience">EXPERIENCE</a>
+</nav>
+<button class="bg-primary text-on-primary font-label-sm text-label-sm px-6 py-2 transition-transform duration-200 active:scale-95">
+                DOWNLOAD CV
+            </button>
+</div>
+</header>
+<main class="relative z-10">
+<!-- Hero Section -->
+<section class="py-24 md:py-32 px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" id="about">
+<div class="lg:col-span-7 space-y-8 hero-in">
+<div class="inline-block px-3 py-1 bg-surface-container-high border border-outline-variant text-primary font-label-sm text-label-sm">
+                    SEC_IDENTIFIER: ALPHA-01
+                </div>
+<h1 class="font-display-lg text-display-lg text-on-surface">
+                    Yassine El Majouli
+                </h1>
+<p class="font-headline-md text-headline-md text-primary terminal-bracket">
+                    Cybersecurity &amp; Cloud Computing Engineering Student | Aspiring SOC Analyst
+                </p>
+<p class="text-body-lg text-on-surface-variant max-w-2xl">
+                    4th-year engineering student at ENSAM Casablanca specializing in Cybersecurity and Cloud Computing. Builds SOC infrastructure and security automation tooling, with hands-on practice across both Blue Team defense and Red Team offensive security, aiming for a SOC Analyst entry point on a DevSecOps trajectory.
+                </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-primary" style="font-size: 18px;">location_on</span>
+                        CASABLANCA, MOROCCO
+                    </div>
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-primary" style="font-size: 18px;">mail</span>
+                        <!-- TODO: replace with your real email -->YOUR-EMAIL@DOMAIN.COM
+                    </div>
+</div>
+</div>
+<div class="lg:col-span-5 flex justify-center lg:justify-end hero-in hero-in-delay">
+<div class="relative w-72 h-72 group">
+<div class="absolute inset-0 bg-primary/20 blur-3xl rounded-full animate-pulse"></div>
+<div class="relative w-full h-full border-2 border-primary/30 p-2 overflow-hidden bg-surface-container-lowest">
+<!-- TODO: this is a Stitch-generated stock photo, not you — replace src with your own headshot -->
+<img class="w-full h-full object-cover grayscale brightness-90 contrast-125" data-alt="A professional high-contrast black and white portrait of a tech professional in a dark studio setting, with subtle cyan rim lighting reflecting off their silhouette. The background is a minimalist tech office with faint server rack lights. The overall aesthetic is sharp, cinematic, and professional, aligned with a modern cybersecurity theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkpqKLUrbt7RbsAbVoZG_WS9tFG6NECYMy5m6q3oGW91LoWfqLPyPrN9tYYtGiufN7pIStpw98h1VbvX7mjBesPyL65Hq7g4J-YECg8O4OxJiVUvwHVPqFthwuYhKt-xg1iqiJ92sjCdb4-iV8LihPyJs74TdxLBDVovi_why9Vm3JVzgyjf-5ndFXUr5uov1Ck5jn97WsNnx-0OD2yAOqOtNC9E9Y1IboVMN5t5oF_hohSU2DdkWS"/>
+<div class="absolute inset-0 border border-primary/50 mix-blend-overlay"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Certifications Section -->
+<section class="py-24 bg-surface-container-lowest">
+<div class="px-margin-desktop max-w-container-max mx-auto">
+<div class="mb-12 border-l-4 border-primary pl-6 reveal">
+<h2 class="font-headline-md text-headline-md text-on-surface decrypt-text">CERTIFICATIONS_REPOSITORY</h2>
+<p class="text-on-surface-variant text-label-sm uppercase tracking-widest mt-1">Verified Technical Accreditations</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 reveal-group">
+<!-- Fortinet -->
+<div class="p-6 bg-surface-container flex flex-col items-center justify-center text-center gap-4 border border-outline-variant/30 custom-glow transition-all">
+<span class="material-symbols-outlined text-primary text-4xl">verified_user</span>
+<div class="space-y-1">
+<p class="font-label-sm text-label-sm text-primary">FORTINET</p>
+<p class="text-[10px] font-bold text-on-surface uppercase">NSE 4 / NSE 5 SD-WAN</p>
+</div>
+</div>
+<!-- TryHackMe -->
+<div class="p-6 bg-surface-container flex flex-col items-center justify-center text-center gap-4 border border-outline-variant/30 custom-glow transition-all">
+<span class="material-symbols-outlined text-primary text-4xl">security</span>
+<div class="space-y-1">
+<p class="font-label-sm text-label-sm text-primary">TRYHACKME</p>
+<p class="text-[10px] font-bold text-on-surface uppercase">SOC LEVEL 1</p>
+</div>
+</div>
+<!-- UNVERIFIED: Cisco Networking Academy certs (Programming in C, Hardware Basics, Packet Tracer) — carried over from the Stitch draft, not something I could confirm. Double-check before publishing. -->
+<!-- Cisco 1 -->
+<div class="p-6 bg-surface-container flex flex-col items-center justify-center text-center gap-4 border border-outline-variant/30 custom-glow transition-all">
+<span class="material-symbols-outlined text-primary text-4xl">terminal</span>
+<div class="space-y-1">
+<p class="font-label-sm text-label-sm text-primary">CISCO ACADEMY</p>
+<p class="text-[10px] font-bold text-on-surface uppercase">PROGRAMMING IN C</p>
+</div>
+</div>
+<!-- Cisco 2 -->
+<div class="p-6 bg-surface-container flex flex-col items-center justify-center text-center gap-4 border border-outline-variant/30 custom-glow transition-all">
+<span class="material-symbols-outlined text-primary text-4xl">memory</span>
+<div class="space-y-1">
+<p class="font-label-sm text-label-sm text-primary">CISCO ACADEMY</p>
+<p class="text-[10px] font-bold text-on-surface uppercase">HARDWARE BASICS</p>
+</div>
+</div>
+<!-- Cisco 3 -->
+<div class="p-6 bg-surface-container flex flex-col items-center justify-center text-center gap-4 border border-outline-variant/30 custom-glow transition-all">
+<span class="material-symbols-outlined text-primary text-4xl">settings_ethernet</span>
+<div class="space-y-1">
+<p class="font-label-sm text-label-sm text-primary">CISCO ACADEMY</p>
+<p class="text-[10px] font-bold text-on-surface uppercase">PACKET TRACER</p>
+</div>
+</div>
+<!-- Coursera -->
+<div class="p-6 bg-surface-container flex flex-col items-center justify-center text-center gap-4 border border-outline-variant/30 custom-glow transition-all">
+<span class="material-symbols-outlined text-primary text-4xl">code</span>
+<div class="space-y-1">
+<p class="font-label-sm text-label-sm text-primary">COURSERA</p>
+<p class="text-[10px] font-bold text-on-surface uppercase">BASH SCRIPTING</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Technical Arsenal -->
+<section class="py-24 px-margin-desktop max-w-container-max mx-auto" id="arsenal">
+<div class="mb-16 reveal">
+<h2 class="font-display-lg text-display-lg text-on-surface text-center decrypt-text">TECHNICAL_ARSENAL</h2>
+<div class="w-24 h-1 bg-primary mx-auto mt-4"></div>
+</div>
+<!-- UNVERIFIED: tool list + proficiency badges (e.g. SPLUNK, EDR CONFIG, BURP SUITE [MASTER], METASPLOIT, AWS) are carried over from the Stitch draft. Confirmed from what's on record: WAZUH SIEM, DOCKER, PYTHON, BASH, and general offensive/defensive CTF practice on TryHackMe. Review and adjust proficiency labels before publishing — self-rated levels like [MASTER]/[EXPERT] should reflect your own honest assessment. -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter reveal-group">
+<!-- Defensive -->
+<div class="bg-surface-container p-8 border border-outline-variant/30 custom-glow">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">policy</span>
+<h3 class="font-headline-md text-headline-md text-on-surface" style="font-size: 18px;">DEFENSIVE</h3>
+</div>
+<ul class="space-y-3 font-code-snippet text-on-surface-variant">
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">WAZUH SIEM</span>
+<span class="text-primary text-[10px]">[ADVANCED]</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">SPLUNK</span>
+<span class="text-primary text-[10px]">[PRO]</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">EDR CONFIG</span>
+<span class="text-primary text-[10px]">[SENIOR]</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">LOG ANALYTICS</span>
+<span class="text-primary text-[10px]">[CORE]</span>
+</li>
+</ul>
+</div>
+<!-- Offensive -->
+<div class="bg-surface-container p-8 border border-outline-variant/30 custom-glow">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">swords</span>
+<h3 class="font-headline-md text-headline-md text-on-surface" style="font-size: 18px;">OFFENSIVE</h3>
+</div>
+<ul class="space-y-3 font-code-snippet text-on-surface-variant">
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">BURP SUITE</span>
+<span class="text-primary text-[10px]">[MASTER]</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">METASPLOIT</span>
+<span class="text-primary text-[10px]">[INTER]</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">NMAP/SQLMAP</span>
+<span class="text-primary text-[10px]">[CORE]</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">VULN-SCANNING</span>
+<span class="text-primary text-[10px]">[EXPERT]</span>
+</li>
+</ul>
+</div>
+<!-- Systems -->
+<div class="bg-surface-container p-8 border border-outline-variant/30 custom-glow">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">dns</span>
+<h3 class="font-headline-md text-headline-md text-on-surface" style="font-size: 18px;">INFRASTRUCTURE</h3>
+</div>
+<ul class="space-y-3 font-code-snippet text-on-surface-variant">
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">AWS</span>
+<span class="text-primary text-[10px]">[HYBRID]</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">DOCKER</span>
+<span class="text-primary text-[10px]">[DEVOPS]</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">LINUX HARDENING</span>
+<span class="text-primary text-[10px]">[EXPERT]</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">CI/CD SECURITY</span>
+<span class="text-primary text-[10px]">[ACTIVE]</span>
+</li>
+</ul>
+</div>
+<!-- Programming -->
+<div class="bg-surface-container p-8 border border-outline-variant/30 custom-glow">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">data_object</span>
+<h3 class="font-headline-md text-headline-md text-on-surface" style="font-size: 18px;">DEVELOPMENT</h3>
+</div>
+<ul class="space-y-3 font-code-snippet text-on-surface-variant">
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">PYTHON</span>
+<span class="text-primary text-[10px]">[SCRIPTS]</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">BASH</span>
+<span class="text-primary text-[10px]">[AUTOMATION]</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="">Powershell</span>
+<span class="text-primary text-[10px]">[SECURITY-windows]</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class=""> C</span>
+<span class="text-primary text-[10px]">[LOW-LEVEL]</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Projects Grid -->
+<section class="py-24 bg-surface-container-low" id="projects">
+<div class="px-margin-desktop max-w-container-max mx-auto">
+<div class="mb-16 flex justify-between items-end reveal">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface decrypt-text">DEPLOYED_MODULES</h2>
+<p class="text-on-surface-variant mt-2 max-w-xl">Active security tools and infrastructure projects designed for enterprise-grade threat management.</p>
+</div>
+<a class="text-primary font-label-sm text-label-sm flex items-center gap-2 hover:underline" href="#">
+                        VIEW_GITHUB <span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter reveal-group">
+<!-- Project 1 -->
+<div class="group bg-surface-container border border-outline-variant/30 overflow-hidden">
+<div class="aspect-video relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60" data-alt="A dark, high-tech dashboard interface showing network security metrics, glowing cyan line graphs, and real-time threat alerts on a dark obsidian background. The UI is clean and data-dense, featuring terminal-like fonts and precise digital elements. Professional cybersecurity software aesthetic, dark mode, cinematic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO0s_PyLPHIK1JBzxX8K2qfXDnMrltkiJek3I3zktCrqOGOvKdVZQei2l6wKYS8Mq-r-hbBPkQ_drpb9HYM1tVjWsT-AlDf3a5nVDdAgf4j3usSvHqXqajYosjt1YNZQcZ5uFkyFTe6rJItph8GKX80_2cpbHeQ5vnjYSeokqs6lz-IdpBc-VMpMHA9NASIepY0yqZ4tOnLkKZtOnZPy1ZE-jaE1hcUOY5Za_dGl0jzTYvhIJQeA75"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent"></div>
+<div class="absolute top-4 left-4 bg-primary text-on-primary px-3 py-1 font-label-sm text-label-sm">
+                                ACTIVE_SEC
+                            </div>
+</div>
+<div class="p-8">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">A-SOC</h3>
+<p class="text-on-surface-variant mb-6 text-body-md">Autonomous Security Operations Centre integrating Wazuh SIEM, Suricata IPS, Shuffle SOAR, and Cortex/TheHive for case management, with a machine-learning detection pipeline trained on the UNSW-NB15 dataset. Inter-VM traffic runs over a Tailscale mesh network.</p>
+<div class="flex flex-wrap gap-2 mb-8">
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">WAZUH</span>
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">SURICATA</span>
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">SHUFFLE SOAR</span>
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">THEHIVE</span>
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">PYTHON / ML</span>
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">DOCKER</span>
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">TAILSCALE</span>
+</div>
+<button class="w-full border border-primary/40 text-primary py-3 font-label-sm text-label-sm hover:bg-primary/10 transition-colors uppercase">Execute Command_Source</button>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="group bg-surface-container border border-outline-variant/30 overflow-hidden">
+<div class="aspect-video relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60" data-alt="An abstract visualization of an AI-powered security scanner, featuring glowing nodes connected by fiber-optic lines in a dark space. Blue and cyan particles represent data packets being analyzed. The background is a deep charcoal texture. Modern brutalist design, sharp lines, high-contrast digital craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDUagIOY2nJsQRQtlnCTKYj_iw1NaY6PU9S6cPXo276z7PjqXOIlPAjsZCo0Ut0tv-4Ainehzt1UDLO-IhJS67YCu2Zx9iz3J42toYJF3P5MaGmeae7zl7kKBq0NHKpE7hyVWeRFQ_xM4wZuOW0O6gjzgZm7H3exnx1hfYHC8aaDmss8f4OwNy1o0P_yF7a_nzo9Jn-6PsrTOpanuWQ5MpiaJhiJZRXmTu-4Dgd2cj1leMQuRQg9Nl"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent"></div>
+<div class="absolute top-4 left-4 bg-primary text-on-primary px-3 py-1 font-label-sm text-label-sm">
+                                ML_MODULE
+                            </div>
+</div>
+<div class="p-8">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">UEBA_wazuh_project</h3>
+<p class="text-on-surface-variant mb-6 text-body-md">User and Entity Behavior Analytics (UEBA) prototype built on top of Wazuh — ingests Wazuh alerts and logs, applies anomaly detection and behavioral baselining, and generates high-risk alerts for suspicious user or host activity.</p>
+<div class="flex flex-wrap gap-2 mb-8">
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">WAZUH</span>
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">RANDOM FOREST</span>
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">GRADIENT BOOSTING</span>
+</div>
+<a class="w-full block text-center border border-primary/40 text-primary py-3 font-label-sm text-label-sm hover:bg-primary/10 transition-colors uppercase" href="https://github.com/elmajouli-yassine/UEBA_wazuh_project" target="_blank" rel="noopener">Execute Command_Source</a>
+</div>
+</div>
+<!-- Project 3 -->
+<div class="group bg-surface-container border border-outline-variant/30 overflow-hidden">
+<div class="aspect-video relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60" data-alt="A terminal window showing complex code snippets and network scan results in bright cyan text against a black background. Subtle scanline effects and a slightly curved CRT screen reflection. The focus is on precision and raw technical data. Cyber-terminal aesthetic, high-end engineering feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRfwNNyffn8Jl2XWp1oQ7j7jywmZtjAC2H3Y0ip8HrcBJCitrmnAR9sK_0x7_Xv5Kl4gayzRdyIHOW2t2t9lie2HzLM534jBNrIrwuMMrV_WPd9-5uMav4SyaH8qHIW7VVkwignZ47LeU8EdnStuAbC9-F7vuRli2luntJReXpF_mTxHCpBEnMbNJ_0QFGPphZgHgpETnOkgSe1G5Mpa9JGFsnJH3FdWCJmt2zu5O4QtqvV1Zaz8sU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent"></div>
+</div>
+<div class="p-8">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">TheSeeker</h3>
+<p class="text-on-surface-variant mb-6 text-body-md">Bash-based OSINT reconnaissance tool with multi-threaded directory enumeration, CewL wordlist generation, redirect tracking, and Anthropic API integration for subdomain prediction.</p>
+<div class="flex flex-wrap gap-2 mb-8">
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">BASH</span>
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">CEWL</span>
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">LLM API</span>
+</div>
+<button class="w-full border border-primary/40 text-primary py-3 font-label-sm text-label-sm hover:bg-primary/10 transition-colors uppercase">Execute Command_Source</button>
+</div>
+</div>
+<!-- Project 4 -->
+<div class="group bg-surface-container border border-outline-variant/30 overflow-hidden">
+<div class="aspect-video relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60" data-alt="A minimalist architectural diagram of a secure cloud infrastructure, using glowing blueprint-style lines on a dark slate background. Symbols for firewalls, load balancers, and encrypted databases are rendered in a sleek, technical style. The lighting is low and moody with sharp cyan highlights. Professional engineering documentation aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCczrja0E_GOxbnNYYligQOgzLjmX-b0SfcikU9G7-wJZp3c813Fp4vDdK3uA8n0cnXej_s-V-z9mSQ9yZCs30nJH6Jcng5Zp0ScGnyaCrVKewRcEmQc4l5IATEobfEfr738rMlZan9XbBh-R9fMtAoEV76ZQypTGlbz1CDQBKSOE_wUb9xFJnnpX8frhizMXcuEdNm5mleQ2vgahhLHvk-OPkO-CHUzLLoClSiAvEBPqE6YYvsK7o5"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent"></div>
+</div>
+<div class="p-8">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Sananer</h3>
+<p class="text-on-surface-variant mb-6 text-body-md">Bash-based OSINT tool for social media data collection and digital footprint analysis — an earlier project that led into TheSeeker.</p>
+<div class="flex flex-wrap gap-2 mb-8">
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">BASH</span>
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">OSINT</span>
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">SOCIAL MEDIA</span>
+</div>
+<button class="w-full border border-primary/40 text-primary py-3 font-label-sm text-label-sm hover:bg-primary/10 transition-colors uppercase">Execute Command_Source</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Experience Timeline -->
+<section class="py-32 px-margin-desktop max-w-container-max mx-auto overflow-hidden" id="experience">
+<h2 class="font-display-lg text-display-lg text-on-surface text-center mb-24 decrypt-text">professional experience</h2>
+<div class="relative timeline-line">
+<!-- Exp 1 -->
+<!-- UNVERIFIED: company and dates confirmed real by user; role title, project name, and specific tools below are from the Stitch draft and still need the user's confirmation/correction. -->
+<div class="mb-24 flex flex-col md:flex-row items-center md:justify-between w-full reveal reveal-right">
+<div class="md:w-5/12 mb-8 md:mb-0 text-right"><span class="font-code-snippet text-primary bg-primary/5 px-3 py-1 border border-primary/20">07/26 - 09/26</span><h3 class="font-headline-md text-headline-md text-on-surface mt-4">Digitalyze &amp; Amplify</h3><p class="text-primary font-label-sm text-label-sm uppercase tracking-widest">Sandbox Platform Architect</p><div class="mt-4 space-y-3"><p class="text-on-surface font-bold text-label-sm uppercase tracking-tighter">Project: Malware Analysis Sandbox (ANY.RUN Inspired)</p><p class="text-on-surface-variant text-body-md">Designed and deployed a sandbox environment integrating CAPEv2, Windows Defender (PowerShell automation), and custom Python hooks. Built a Docker-Compose orchestration layer to containerize analysis services across KVM virtual machines. Engineered plugin architecture for modular expansion and implemented network isolation via Nginx.</p><div class="flex flex-wrap gap-2 justify-end"><span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">CAPEV2</span><span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">DOCKER-COMPOSE</span><span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">KVM</span><span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">PYTHON</span><span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">POWERSHELL</span><span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">NGINX</span><span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">DJANGO</span><span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">REDIS</span><span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">POSTGRESQL</span></div></div></div>
+<div class="absolute left-50 transform -translate-x-1/2 w-4 h-4 bg-primary border-4 border-surface-main z-20"></div>
+<div class="md:w-5/12 hidden md:block"></div>
+</div>
+<!-- Exp 2 -->
+<div class="flex flex-col md:flex-row items-center md:justify-between w-full reveal reveal-left">
+<div class="md:w-5/12 hidden md:block"></div>
+<div class="absolute left-50 transform -translate-x-1/2 w-4 h-4 bg-primary border-4 border-surface-main z-20"></div>
+<div class="md:w-5/12 mb-8 md:mb-0"><span class="font-code-snippet text-primary bg-primary/5 px-3 py-1 border border-primary/20">06/25 - 08/25</span><h3 class="font-headline-md text-headline-md text-on-surface mt-4">DGM (Direction Générale de la Météo)</h3><p class="text-primary font-label-sm text-label-sm uppercase tracking-widest">IT &amp; Cybersecurity Specialist</p><div class="mt-4 space-y-3"><p class="text-on-surface-variant text-body-md">Configured and maintained Fortigate firewalls and WAF policies (NSE 4 certified). Supervised security of information systems and network infrastructure maintenance. Contributed to detection and escalation of network security incidents.</p><div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">FORTIGATE FIREWALL</span><span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">WAF</span><span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">NSE 4</span><span class="px-2 py-1 bg-surface-container-high border border-outline-variant text-[10px] font-bold text-primary tracking-tighter">NETWORK MONITORING</span></div></div></div>
+</div>
+<!-- UNVERIFIED: ANAPEC internship dates/details carried over from the Stitch draft, not something I could confirm. Double-check before publishing. -->
+<div class="mb-24 flex flex-col md:flex-row items-center md:justify-between w-full reveal reveal-right"><div class="md:w-5/12 mb-8 md:mb-0 text-right"><span class="font-code-snippet text-primary bg-primary/5 px-3 py-1 border border-primary/20">07/23 - 08/23</span><h3 class="font-headline-md text-headline-md text-on-surface mt-4">ANAPEC Nouaceur</h3><p class="text-primary font-label-sm text-label-sm uppercase tracking-widest">Administrative Intern</p><p class="text-on-surface-variant mt-4 text-body-md">Supported administrative operations and digital record management, contributing to the efficiency of employment service workflows and data organization.</p></div><div class="absolute left-50 transform -translate-x-1/2 w-4 h-4 bg-primary border-4 border-surface-main z-20"></div><div class="md:w-5/12 hidden md:block"></div></div></div>
+</section>
+<!-- Community Leadership -->
+<section class="py-24 bg-surface-container">
+<div class="px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 reveal-group">
+<div class="bg-surface-main p-10 border border-outline-variant/30 border-t-4 border-t-primary">
+<div class="flex items-center gap-4 mb-6">
+<span class="material-symbols-outlined text-primary text-4xl">groups</span>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">GDG ENSAM</h3>
+<p class="text-primary font-label-sm text-label-sm uppercase">Cybersecurity Trainer</p>
+</div>
+</div>
+<p class="text-on-surface-variant text-body-md">Delivering cybersecurity workshops to fellow students as part of Google Developer Group ENSAM.</p>
+</div>
+<div class="bg-surface-main p-10 border border-outline-variant/30 border-t-4 border-t-secondary">
+<div class="flex items-center gap-4 mb-6">
+<span class="material-symbols-outlined text-secondary text-4xl">handshake</span>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">ENACTUS ENSAM</h3>
+<p class="text-secondary font-label-sm text-label-sm uppercase">Technical Manager → Community Manager</p>
+</div>
+</div>
+<p class="text-on-surface-variant text-body-md">Started as Technical Manager for social entrepreneurship projects, then moved into the Community Manager role.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant/20 w-full py-12">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter px-margin-desktop max-w-container-max mx-auto items-center">
+<div class="col-span-1 lg:col-span-2">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">shield</span>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-[0.2em]">YEM SECURITY LABS</span>
+</div>
+<p class="font-body-md text-body-md text-secondary opacity-80">© 2026 YEM SECURITY. ALL RIGHTS RESERVED.</p>
+</div>
+<div class="flex flex-col gap-2">
+<p class="font-label-sm text-label-sm text-primary mb-2">NETWORK_NODES</p>
+<!-- TODO: replace with your real LinkedIn URL --><a class="text-on-surface-variant hover:text-secondary transition-colors font-body-md text-body-md" href="#">LinkedIn</a>
+<!-- TODO: replace with your real GitHub URL --><a class="text-on-surface-variant hover:text-secondary transition-colors font-body-md text-body-md" href="#">GitHub</a>
+</div>
+<div class="flex flex-col gap-2">
+<p class="font-label-sm text-label-sm text-primary mb-2">LOCATION_SERVICES</p>
+<p class="text-on-surface-variant font-body-md text-body-md">Casablanca, Morocco</p>
+<!-- TODO: replace with your real email --><a class="text-on-surface-variant hover:text-secondary transition-colors font-body-md text-body-md" href="mailto:YOUR-EMAIL@DOMAIN.COM">Email Direct</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction: Radial cursor glow
+        const glowCanvas = document.getElementById('glow-canvas');
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            glowCanvas.style.setProperty('--x', `${x}%`);
+            glowCanvas.style.setProperty('--y', `${y}%`);
+        });
+
+        // Sticky header opacity on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('bg-surface/95');
+            } else {
+                header.classList.remove('bg-surface/95');
+            }
+        });
+
+        // SCAN_PROGRESS: thin HUD bar tracking read progress down the page
+        const scanProgress = document.getElementById('scan-progress');
+        function updateScanProgress() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+            if (scanProgress) scanProgress.style.width = pct + '%';
+        }
+        window.addEventListener('scroll', updateScanProgress, { passive: true });
+        updateScanProgress();
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (!prefersReducedMotion) {
+            // Stagger children inside each reveal-group
+            document.querySelectorAll('.reveal-group').forEach((group) => {
+                Array.from(group.children).forEach((child, i) => {
+                    child.style.setProperty('--reveal-index', i);
+                });
+            });
+
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+            document.querySelectorAll('.reveal, .reveal-group').forEach((el) => revealObserver.observe(el));
+
+            // Terminal decrypt effect for section headlines
+            const GLYPHS = '!<>-_\\/[]{}=+*^?#01アイウエオカキ';
+            function decrypt(el) {
+                const original = el.textContent;
+                const len = original.length;
+                const totalFrames = 18;
+                let frame = 0;
+                function tick() {
+                    let output = '';
+                    for (let i = 0; i < len; i++) {
+                        if (original[i] === ' ' || original[i] === '_') {
+                            output += original[i];
+                        } else if (i < (frame / totalFrames) * len) {
+                            output += original[i];
+                        } else {
+                            output += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+                        }
+                    }
+                    el.textContent = output;
+                    frame++;
+                    if (frame <= totalFrames) {
+                        setTimeout(() => requestAnimationFrame(tick), 28);
+                    } else {
+                        el.textContent = original;
+                    }
+                }
+                tick();
+            }
+
+            const decryptObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        decrypt(entry.target);
+                        decryptObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.4 });
+
+            document.querySelectorAll('.decrypt-text').forEach((el) => decryptObserver.observe(el));
+        } else {
+            // Reduced motion: show everything immediately, no scramble
+            document.querySelectorAll('.reveal, .reveal-group').forEach((el) => el.classList.add('is-visible'));
+        }
+    </script>
+</body></html>
